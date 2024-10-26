@@ -46,6 +46,7 @@ namespace Store.Web
 
             await ApplySeeding.ApplySeedingAsync(app);
 
+            app.UseStaticFiles();
             app.MapControllers();
 
             app.Run();
