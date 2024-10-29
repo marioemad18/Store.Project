@@ -18,6 +18,8 @@ namespace Store.Repository.Interfaces
         Task<TEntity> GetWithSpecificationByIdAsync(ISpecification<TEntity> specs);
 
         Task<IReadOnlyList<TEntity>> GetAllWithSpecificationAsync(ISpecification<TEntity> specs);
+
+        Task<int> GetCountWithSpecification(ISpecification<TEntity> specs); 
         Task AddAsync(TEntity entity);
 
         void Update(TEntity entity);
