@@ -6,6 +6,7 @@ using Store.Repository.UnitOfWork;
 using Store.Service.Services.Products;
 using Store.Service.Services.Products.Dtos;
 using Store.Web.Helper;
+using Store.Web.Middleware;
 
 namespace Store.Web
 {
@@ -41,7 +42,7 @@ namespace Store.Web
             }
 
             app.UseHttpsRedirection();
-
+            app.UseMiddleware<ExeptionMiddleware>();
             app.UseAuthorization();
 
             await ApplySeeding.ApplySeedingAsync(app);
