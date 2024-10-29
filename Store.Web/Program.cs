@@ -3,8 +3,10 @@ using Microsoft.EntityFrameworkCore;
 using Store.Data.Context;
 using Store.Repository.Interfaces;
 using Store.Repository.UnitOfWork;
+using Store.Service.HandleResponse;
 using Store.Service.Services.Products;
 using Store.Service.Services.Products.Dtos;
+using Store.Web.Extensions;
 using Store.Web.Helper;
 using Store.Web.Middleware;
 
@@ -28,9 +30,7 @@ namespace Store.Web
                 options.UseSqlServer(builder.Configuration.GetConnectionString("DeafultConnection"));
             });
 
-            builder.Services.AddScoped<IUnitOfWork, UnitOfWork>();
-            builder.Services.AddScoped<IProductService, ProductService>();
-            builder.Services.AddAutoMapper(typeof(ProductProfile));
+           builder.Services.ApplicationServices();
 
             var app = builder.Build();
 
