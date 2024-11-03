@@ -41,10 +41,20 @@ namespace Store.Repository
                 if (context.Products != null && !context.Products.Any())
                 {
                     var productData = File.ReadAllText("../Store.Repository/SeedData/products.json");
-                    var products = JsonSerializer.Deserialize<List<Product>>(productData);
-                    if (products is not null)
+                    var Data = JsonSerializer.Deserialize<List<Product>>(productData);
+                    if (Data is not null)
                     {
-                        await context.Products.AddRangeAsync(products);
+                        await context.Products.AddRangeAsync(Data);
+                    }
+                }
+
+                if (context.deliveryMethods != null && !context.deliveryMethods.Any())
+                {
+                    var deliveryMethod = File.ReadAllText("../Store.Repository/SeedData/delivery.json");
+                    var Data = JsonSerializer.Deserialize<List<DeliveryMethod>>(deliveryMethod);
+                    if (Data is not null)
+                    {
+                        await context.deliveryMethods.AddRangeAsync(Data);
                     }
                 }
                 await context.SaveChangesAsync();
