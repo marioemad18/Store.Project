@@ -1,5 +1,7 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿using Microsoft.AspNetCore.Identity;
+using Microsoft.EntityFrameworkCore;
 using Store.Data.Context;
+using Store.Data.Entity.IdentityEntity;
 using Store.Repository;
 
 namespace Store.Web.Helper
@@ -10,14 +12,16 @@ namespace Store.Web.Helper
         {
             using (var scope = app.Services.CreateScope())
             {
-                var service = scope.ServiceProvider; 
+                var services = scope.ServiceProvider; 
 
-                var loggerFactory = service.GetRequiredService<ILoggerFactory>();
+                var loggerFactory = services.GetRequiredService<ILoggerFactory>();
                 try
                 {
-                    var context = service.GetRequiredService<StoreDbContext>();
+                    var context = services.GetRequiredService<StoreDbContext>();
+                    var UserManager = services.GetRequiredService<UserManager<AppUser>>();
                     await context.Database.MigrateAsync();
                     await StoreContextSeed.SeedAsync(context, loggerFactory);
+                    await StoreIdentityContextSeed.SeedUserAsync(UserManager);
                 }
                 catch (Exception ex)
                 {
